@@ -21,6 +21,9 @@ fn main() -> std::io::Result<()> {
     
             let mut buff           = String::new();
             let _bytes_read        = socket.read_to_string(&mut buff).unwrap();
+            
+            println!("{:#?}", buff);
+            println!("{}", _bytes_read);
 
             match unserialize(&buff) {
 
