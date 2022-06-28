@@ -67,12 +67,12 @@ fn unserialize(command: &str) -> std::io::Result<&str> {
          x if x.starts_with('+') => {     
              let unprefixed_str = x.trim_start_matches(|prefix| prefix == '+').trim();
              let unsuffixed_str = unprefixed_str.trim_end_matches(r"\r\n");
-             if  unsuffixed_str == PING { return Ok(r"+PONG\r\n") }
+             if  unsuffixed_str == PING { return Ok(r"$5\r\n+PONG\r\n") }
             
-            Ok(r"+PONG\r\n")
+            Ok(r"$5\r\n+PONG\r\n")
 
         }
-        _ => Ok(r"+PONG\r\n"),
+        _ => Ok(r"$5\r\n+PONG\r\n"),
     }
 
 }
