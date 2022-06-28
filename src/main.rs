@@ -10,7 +10,7 @@ const PING: &str = "PING";
 
 fn main() -> std::io::Result<()> {
 
-    let listener = TcpListener::bind("localhost:6379").unwrap();
+    let listener = TcpListener::bind("127.0.0.1:6379").unwrap();
 
     
     match listener.accept() {
@@ -67,12 +67,12 @@ fn unserialize(command: &str) -> std::io::Result<&str> {
          x if x.starts_with('+') => {     
              let unprefixed_str = x.trim_start_matches(|prefix| prefix == '+').trim();
              let unsuffixed_str = unprefixed_str.trim_end_matches(r"\r\n");
-             if  unsuffixed_str == PING { return Ok("PONG") }
+             if  unsuffixed_str == PING { return Ok(r"+PONG\r\n") }
             
-            Ok("Unknown")
+            Ok(r"+PONG\r\n")
 
         }
-        _ => panic!("Unknown command {}", command),
+        _ => Ok(r"+PONG\r\n"),
     }
 
 }
